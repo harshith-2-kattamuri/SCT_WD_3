@@ -1,0 +1,337 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  min-height: 100vh;
+  min-height: 100dvh; /* For mobile browsers */
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: clamp(5px, 2vw, 10px);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  margin: 0;
+}
+
+.help-icon {
+  width: clamp(35px, 8vw, 40px);
+  height: clamp(35px, 8vw, 40px);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(20px, 5vw, 24px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.help-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.help-icon {
+  position: relative;
+}
+
+.instructions {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #2c3e50, #3498db);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  width: min(310px, 90vw);
+  z-index: 1000;
+  font-size: clamp(14px, 3vw, 16px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.instructions::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #2c3e50;
+}
+
+/* For mobile devices, show instructions at the center of the screen */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .instructions {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90%, 300px);
+  }
+
+  .instructions::before {
+    display: none;
+  }
+}
+
+.help-icon:hover .instructions {
+  display: block;
+}
+
+.instructions h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: clamp(16px, 4vw, 20px);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.instructions ul {
+  list-style-position: outside;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin: 8px 0;
+  padding-left: 5px;
+  position: relative;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.instructions li:hover {
+  color: #fff;
+  transform: translateX(5px);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 3vw, 20px);
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.status {
+  text-align: center;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: bold;
+  color: #fff;
+  padding: clamp(10px, 3vw, 15px);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(5px, 2vw, 10px);
+  margin: 0 auto;
+  width: min(90vw, 400px);
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.1);
+  padding: clamp(10px, 3vw, 20px);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.cell {
+  background: rgba(255, 255, 255, 0.1);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2rem, 10vw, 3rem);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: white;
+  touch-action: manipulation; /* Improves touch interaction */
+  -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+}
+
+/* Adjust hover effects for devices that support hover */
+@media (hover: hover) {
+  .cell:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+/* Touch device active state */
+.cell:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.95);
+}
+
+.cell.x {
+  color: #FF6B6B;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.cell.o {
+  color: #4ECDC4;
+  text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+}
+
+#restartButton {
+  display: block;
+  width: min(200px, 80%);
+  margin: clamp(1rem, 3vw, 2rem) auto;
+  padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 24px);
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  touch-action: manipulation;
+}
+
+/* Hover effects only for devices that support hover */
+@media (hover: hover) {
+  #restartButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+/* Touch device active state */
+#restartButton:active {
+  transform: scale(0.95);
+}
+
+/* Landscape mode optimization for mobile devices */
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    align-items: start;
+  }
+
+  .container {
+    padding-top: 0;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .game-board {
+    width: min(70vh, 400px);
+  }
+
+  .cell {
+    font-size: clamp(1.5rem, 8vh, 3rem);
+  }
+}
+
+.designer-credit {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.designer-credit a {
+  color: #ffdf5d;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.designer-credit a:hover {
+  color: #ffdf5d;
+  transform: translatey(-3px);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@keyframes winningCell {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes winningText {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cell.winner {
+  animation: winningCell 1s ease infinite;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.status.winner {
+  animation: winningText 1s ease infinite;
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}

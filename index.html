@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>  <div class="container">
+    <div class="header">
+      <h1>Tic Tac Toe</h1>
+      <div class="help-icon">?
+        <div class="instructions">
+          <h2>How to Play:</h2>          <ul>
+            <li>The game is played on a 3x3 grid</li>
+            <li>Player 1 uses X, Player 2 uses O</li>
+            <li>Players take turns placing their marks</li>
+            <li>The first player to get 3 in a row (horizontal, vertical, or diagonal) wins</li>
+            <li>If all squares are filled and no one wins, it's a draw</li>
+          </ul>
+          <div class="designer-credit">
+            Designed by <a href="https://github.com/harshith-2-kattamuri" target="_blank">Harshith</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-info">
+      <div class="status" id="status">Player X's Turn</div>
+    </div>
+
+    <div class="game-board" id="board">
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+    </div>
+
+    <button id="restartButton">Restart Game</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
